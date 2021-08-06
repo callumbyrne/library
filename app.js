@@ -1,11 +1,6 @@
 //storage array
 let myLib = [];
 
-// let title = "Harry Potter and the Philosopher's Stone";
-// let author = "J. K. Rowling";
-// let pages = "320";
-// let read = "not read yet";
-
 const bookContainer = document.querySelector(".bookContainer");
 
 //constructor
@@ -43,20 +38,25 @@ function addBook(e) {
     const authorDiv = document.createElement('div');
     const pagesDiv = document.createElement('div');
     const readDiv = document.createElement('div');
+    const deleteDiv = document.createElement('div');
+    const deleteBtn = document.createElement('button');
 
     bookDiv.classList.add('book');
+    deleteBtn.innerText = "Delete";
 
     const titleContent = document.createTextNode(title);
     const authorContent = document.createTextNode(author);
     const pagesContent = document.createTextNode(pages);
     const readContent = document.createTextNode(read);
 
+
     titleDiv.appendChild(titleContent);
     authorDiv.appendChild(authorContent);
     pagesDiv.appendChild(pagesContent);
     readDiv.appendChild(readContent);
+    deleteDiv.appendChild(deleteBtn);
 
-    bookDiv.append(titleDiv, authorDiv, pagesDiv, readDiv);
+    bookDiv.append(titleDiv, authorDiv, pagesDiv, readDiv, deleteDiv);
     bookContainer.appendChild(bookDiv);
 };
 
@@ -64,8 +64,5 @@ function addBook(e) {
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn').addEventListener('click', addBook);
 });
-
-// addBook();
-// renderBook();
 
 
