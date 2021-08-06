@@ -1,12 +1,12 @@
 //storage array
 let myLib = [];
 
-let title = "Harry Potter and the Philosopher's Stone";
-let author = "J. K. Rowling";
-let pages = "320";
-let read = "not read yet";
+// let title = "Harry Potter and the Philosopher's Stone";
+// let author = "J. K. Rowling";
+// let pages = "320";
+// let read = "not read yet";
 
-const body = document.querySelector(".body");
+const bookContainer = document.querySelector(".bookContainer");
 
 //constructor
 function Book(title, author, pages, read) {
@@ -21,21 +21,51 @@ Book.prototype.info = function () {
     return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`;
 };
 
-function addBookToLibrary() {
-    book = new Book(title, author, pages, read);
+function addBook(e) {
+    e.preventDefault();
+    // Get the form values
+    let title = document.getElementById('title').value;
+    let author = document.getElementById('author').value;
+    let pages = document.getElementById('pages').value;
+    let read = document.getElementById('read').value;
+    let book = new Book(title, author, pages, read);
     myLib.push(book);
+    document.querySelector('form').reset();
+
+    // below code outputs the myLib array to JSON
+    // let pre = document.querySelector('.bookContainer pre');
+    // pre.textContent = '\n' + JSON.stringify(myLib, null, 2);
+
+    const bookContainer = document.querySelector(".bookContainer");
+
+    const bookDiv = document.createElement('div');
+    const titleDiv = document.createElement('div');
+    const authorDiv = document.createElement('div');
+    const pagesDiv = document.createElement('div');
+    const readDiv = document.createElement('div');
+
+    bookDiv.classList.add('book');
+
+    const titleContent = document.createTextNode(title);
+    const authorContent = document.createTextNode(author);
+    const pagesContent = document.createTextNode(pages);
+    const readContent = document.createTextNode(read);
+
+    titleDiv.appendChild(titleContent);
+    authorDiv.appendChild(authorContent);
+    pagesDiv.appendChild(pagesContent);
+    readDiv.appendChild(readContent);
+
+    bookDiv.append(titleDiv, authorDiv, pagesDiv, readDiv);
+    bookContainer.appendChild(bookDiv);
 };
 
-function renderBook() {
-    myLib.forEach(book => {
-        const div = document.createElement('div');
-        const content = document.createTextNode(book.info());
-        div.appendChild(content);
-        body.appendChild(div);
-    })
-};
 
-addBookToLibrary();
-renderBook();
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('btn').addEventListener('click', addBook);
+});
+
+// addBook();
+// renderBook();
 
 
