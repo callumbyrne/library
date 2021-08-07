@@ -27,9 +27,7 @@ function addBook(e) {
     myLib.push(book);
     document.querySelector('form').reset();
 
-    // below code outputs the myLib array to JSON
-    // let pre = document.querySelector('.bookContainer pre');
-    // pre.textContent = '\n' + JSON.stringify(myLib, null, 2);
+    index = myLib.findIndex(book => book.title == title);
 
     const bookContainer = document.querySelector(".bookContainer");
 
@@ -39,30 +37,46 @@ function addBook(e) {
     const pagesDiv = document.createElement('div');
     const readDiv = document.createElement('div');
     const deleteDiv = document.createElement('div');
+
+    const readBtn = document.createElement('button');
     const deleteBtn = document.createElement('button');
 
     bookDiv.classList.add('book');
+    deleteBtn.classList.add('deleteBtn');
+    bookDiv.setAttribute('data-index', index);
     deleteBtn.innerText = "Delete";
+    readBtn.innerText = read;
 
     const titleContent = document.createTextNode(title);
     const authorContent = document.createTextNode(author);
     const pagesContent = document.createTextNode(pages);
-    const readContent = document.createTextNode(read);
 
 
     titleDiv.appendChild(titleContent);
     authorDiv.appendChild(authorContent);
     pagesDiv.appendChild(pagesContent);
-    readDiv.appendChild(readContent);
+    readDiv.appendChild(readBtn);
     deleteDiv.appendChild(deleteBtn);
 
     bookDiv.append(titleDiv, authorDiv, pagesDiv, readDiv, deleteDiv);
     bookContainer.appendChild(bookDiv);
+
+    document.querySelectorAll('.deleteBtn').forEach(btn => {
+        btn.addEventListener('click', deleteBook);
+    });
 };
+
+function deleteBook(e) {
+    const bookIndex = e.path[2].dataset.index;
+    const book = document.querySelector(`[data-index='${bookIndex}']`);
+    const bookContainer = document.querySelector(".bookContainer");
+    bookContainer.removeChild(book);
+    myLib.splice(bookIndex, 1);
+}
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('btn').addEventListener('click', addBook);
+    document.getElementById('submitBtn').addEventListener('click', addBook);
 });
 
 
