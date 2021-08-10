@@ -1,5 +1,6 @@
 //storage array
-let myLib = [];
+let myLib = JSON.parse(localStorage.getItem("myLib")) || [];
+// let myLib = [];
 
 const bookContainer = document.querySelector(".bookContainer");
 
@@ -11,25 +12,27 @@ function Book(title, author, pages, read) {
     this.read = read;
 };
 
-//adding universal info function to the Book.prototype object
-Book.prototype.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`;
-};
 
 function addBook(e) {
     e.preventDefault();
     // Get the form values
-    let title = document.getElementById('title').value;
-    let author = document.getElementById('author').value;
-    let pages = document.getElementById('pages').value;
-    let read = document.getElementById('read').value;
-    let book = new Book(title, author, pages, read);
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.getElementById('read').value;
+    const book = new Book(title, author, pages, read);
     myLib.push(book);
     document.querySelector('form').reset();
 
-    index = myLib.findIndex(book => book.title == title);
+    //saves myLib to localStorage
+    localStorage.setItem("myLib", JSON.stringify(myLib));
 
-    const bookContainer = document.querySelector(".bookContainer");
+    renderBook(book);
+};
+
+function renderBook(book) {
+    const title = book.title;
+    index = myLib.findIndex(book => book.title == title);
 
     const bookDiv = document.createElement('div');
     const titleDiv = document.createElement('div');
@@ -43,13 +46,15 @@ function addBook(e) {
 
     bookDiv.classList.add('book');
     deleteBtn.classList.add('deleteBtn');
+    readBtn.classList.add('readBtn');
+    // gives the new book a data-attribute with the index of the new books location within the myLib array
     bookDiv.setAttribute('data-index', index);
     deleteBtn.innerText = "Delete";
-    readBtn.innerText = read;
+    readBtn.innerText = book.read;
 
-    const titleContent = document.createTextNode(title);
-    const authorContent = document.createTextNode(author);
-    const pagesContent = document.createTextNode(pages);
+    const titleContent = document.createTextNode(book.title);
+    const authorContent = document.createTextNode(book.author);
+    const pagesContent = document.createTextNode(book.pages);
 
 
     titleDiv.appendChild(titleContent);
@@ -64,15 +69,38 @@ function addBook(e) {
     document.querySelectorAll('.deleteBtn').forEach(btn => {
         btn.addEventListener('click', deleteBook);
     });
+
+    document.querySelectorAll('.readBtn').forEach(btn => {
+        btn.addEventListener('click', readToggle);
+    });
 };
 
 function deleteBook(e) {
     const bookIndex = e.path[2].dataset.index;
     const book = document.querySelector(`[data-index='${bookIndex}']`);
-    const bookContainer = document.querySelector(".bookContainer");
     bookContainer.removeChild(book);
     myLib.splice(bookIndex, 1);
-}
+    localStorage.setItem("myLib", JSON.stringify(myLib));
+};
+
+function readToggle(e) {
+    const bookIndex = e.path[2].dataset.index;
+    if (e.target.innerText == "Read") {
+        myLib[bookIndex].read = "Not Read";
+        e.target.innerText = "Not Read";
+    } else {
+        myLib[bookIndex].read = "Read";
+        e.target.innerText = "Read";
+    };
+    localStorage.setItem("myLib", JSON.stringify(myLib));
+};
+
+
+if (myLib) {
+    myLib.forEach(book => {
+        renderBook(book);
+    });
+};
 
 
 document.addEventListener('DOMContentLoaded', () => {
