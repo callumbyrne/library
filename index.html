@@ -17,39 +17,48 @@
 <body>
     <div class="container">
         <h1>my Library</h1>
-        <h2>New Book</h2>
-
-        <form>
-            <div class="formBox">
-                <label for="title">Title</label>
-                <input type="text" id="title">
-            </div>
-            <div class="formBox">
-                <label for="author">Author</label>
-                <input type="text" id="author">
-            </div>
-            <div class="formBox">
-                <label for="pages">Pages</label>
-                <input type="text" id="pages">
-            </div>
-            <div class="formBox">
-                <label for="read">Status</label>
-                <select name="read" id="read">
-                    <option value="Read">Read</option>
-                    <option value="Not Read">Not Read</option>
-                </select>
-            </div>
-            <div class="formBox">
-                <button id="submitBtn">Submit</button>
-            </div>
-        </form>
-
-        <div class="bookContainer">
-            <pre></pre>
+        <div>
+            <button id="newBtn">New Book</button>
         </div>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-box">
+                            <label for="title">Title</label>
+                            <input type="text" id="title">
+                        </div>
+                        <div class="form-box">
+                            <label for="author">Author</label>
+                            <input type="text" id="author">
+                        </div>
+                        <div class="form-box">
+                            <label for="pages">Pages</label>
+                            <input type="text" id="pages">
+                        </div>
+                        <div class="form-box">
+                            <label for="read">Status</label>
+                            <select name="read" id="read">
+                                <option value="Read">Read</option>
+                                <option value="Not Read">Not Read</option>
+                            </select>
+                        </div>
+                        <div class="form-submit">
+                            <button id="submitBtn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="bookContainer"></div>
     </div>
 
     <script src="app.js"></script>
+    <script src="modal.js"></script>
 </body>
 
 </html>

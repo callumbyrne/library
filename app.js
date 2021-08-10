@@ -1,6 +1,5 @@
 //storage array
 let myLib = JSON.parse(localStorage.getItem("myLib")) || [];
-// let myLib = [];
 
 const bookContainer = document.querySelector(".bookContainer");
 
