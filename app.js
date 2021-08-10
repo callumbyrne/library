@@ -19,14 +19,19 @@ function addBook(e) {
     const author = document.getElementById('author').value;
     const pages = document.getElementById('pages').value;
     const read = document.getElementById('read').value;
-    const book = new Book(title, author, pages, read);
-    myLib.push(book);
-    document.querySelector('form').reset();
 
-    //saves myLib to localStorage
-    localStorage.setItem("myLib", JSON.stringify(myLib));
+    if (!title) {
+        return alert("A title is required :)");
+    } else {
+        const book = new Book(title, author, pages, read);
+        myLib.push(book);
+        document.querySelector('form').reset();
 
-    renderBook(book);
+        //saves myLib to localStorage
+        localStorage.setItem("myLib", JSON.stringify(myLib));
+
+        renderBook(book);
+    }
 };
 
 function renderBook(book) {
@@ -46,6 +51,7 @@ function renderBook(book) {
     bookDiv.classList.add('book');
     deleteBtn.classList.add('deleteBtn');
     readBtn.classList.add('readBtn');
+    titleDiv.classList.add('titleDiv');
     // gives the new book a data-attribute with the index of the new books location within the myLib array
     bookDiv.setAttribute('data-index', index);
     deleteBtn.innerText = "Delete";
@@ -53,7 +59,7 @@ function renderBook(book) {
 
     const titleContent = document.createTextNode(book.title);
     const authorContent = document.createTextNode(book.author);
-    const pagesContent = document.createTextNode(book.pages);
+    const pagesContent = document.createTextNode(`${book.pages} pages`);
 
 
     titleDiv.appendChild(titleContent);

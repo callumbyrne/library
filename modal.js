@@ -2,6 +2,7 @@ const modal = document.querySelector("#modal");
 const newBtn = document.querySelector("#newBtn");
 const span = document.querySelector(".close");
 const submitBtn = document.querySelector("#submitBtn");
+const title = document.getElementById('title').value;
 
 newBtn.addEventListener('click', () => {
     modal.style.display = "block";
@@ -12,7 +13,11 @@ span.addEventListener('click', () => {
 });
 
 submitBtn.addEventListener('click', () => {
-    modal.style.display = "none";
+    if (!title) {
+        return;
+    } else {
+        modal.style.display = "none";
+    };
 })
 
 window.onclick = function (e) {
