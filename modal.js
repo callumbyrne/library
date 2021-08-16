@@ -1,3 +1,5 @@
+// https://www.w3schools.com/howto/howto_css_modals.asp
+
 const modal = document.querySelector("#modal");
 const newBtn = document.querySelector("#newBtn");
 const span = document.querySelector(".close");
@@ -13,12 +15,8 @@ span.addEventListener('click', () => {
 });
 
 submitBtn.addEventListener('click', () => {
-    if (!title) {
-        return;
-    } else {
-        modal.style.display = "none";
-    };
-})
+    modal.style.display = "none";
+});
 
 window.onclick = function (e) {
     if (e.target == modal) {
