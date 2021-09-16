@@ -2,6 +2,11 @@
 let myLib = JSON.parse(localStorage.getItem("myLib")) || [];
 
 const bookContainer = document.querySelector(".bookContainer");
+const titleForm = document.getElementById('title');
+const authorForm = document.getElementById('author');
+const pagesForm = document.getElementById('pages');
+const form = document.querySelector('form');
+
 
 class Book {
     constructor(title, author, pages, read) {
@@ -21,9 +26,9 @@ function addBook(e) {
     const pages = document.getElementById('pages').value;
     const read = document.getElementById('read').value;
 
-    if (!title) {
-        return alert("A title is required :)");
-    } else {
+    // if (!title) {
+    //     return alert("A title is required :)");
+    // } else {
         const book = new Book(title, author, pages, read);
         myLib.push(book);
         document.querySelector('form').reset();
@@ -32,7 +37,7 @@ function addBook(e) {
         localStorage.setItem("myLib", JSON.stringify(myLib));
 
         renderBook(book);
-    }
+    // }
 };
 
 function renderBook(book) {
@@ -108,9 +113,28 @@ if (myLib) {
     });
 };
 
+console.log(titleForm);
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('submitBtn').addEventListener('click', addBook);
+titleForm.addEventListener('input', () => {
+    console.log('title');
 });
+
+authorForm.addEventListener('input', () => {
+
+});
+
+pagesForm.addEventListener('input', () => {
+
+});
+    
+form.addEventListener('submit', (e) => {
+    // e.preventDefault();
+    if (titleForm.validity.valueMissing) {
+        e.preventDefault();
+    } else {
+        modal.style.display = "none";
+    }
+});
+
 
 

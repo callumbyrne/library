@@ -14,9 +14,9 @@ span.addEventListener('click', () => {
     modal.style.display = "none";
 });
 
-submitBtn.addEventListener('click', () => {
-    modal.style.display = "none";
-});
+// submitBtn.addEventListener('click', () => {
+//     modal.style.display = "none";
+// });
 
 window.onclick = function (e) {
     if (e.target == modal) {
