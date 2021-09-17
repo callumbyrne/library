@@ -207,3 +207,11 @@ form {
     text-decoration: none;
     cursor: pointer;
 }
+
+.error {
+    color: red;
+}
+
+.error.active {
+    padding: 0.3rem;
+}
