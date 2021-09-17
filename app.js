@@ -3,8 +3,11 @@ let myLib = JSON.parse(localStorage.getItem("myLib")) || [];
 
 const bookContainer = document.querySelector(".bookContainer");
 const titleForm = document.getElementById('title');
+const titleError = document.querySelector('#title + span.error');
 const authorForm = document.getElementById('author');
+const authorError = document.querySelector('#author + span.error');
 const pagesForm = document.getElementById('pages');
+const pagesError = document.querySelector('#pages + span.error');
 const form = document.querySelector('form');
 
 
@@ -113,27 +116,56 @@ if (myLib) {
     });
 };
 
-console.log(titleForm);
+//the input field being checked
+let formInput = '';
 
-titleForm.addEventListener('input', () => {
-    console.log('title');
+function showError(e) {
+    formInput = e.target;
+    formName = e.target.id;
+    if (formInput.validity.valueMissing) {
+        document.querySelector(`#${formName} + span.error`).textContent = 'This is required!';
+    } else if (formInput.validity.typeMismatch) {
+        console.log('mismatch');
+    } else if (formInput.validity.tooShort) {
+        document.querySelector(`#${formName} + span.error`).textContent = 'Too short!';
+    } else if (formInput.validity.rangeUnderflow) {
+        document.querySelector(`#${formName} + span.error`).textContent = 'Must be greater than 1!';
+    }
+};
+
+
+titleForm.addEventListener('input', (e) => {
+    if (titleForm.validity.valid) {
+        titleError.textContent = '';
+    } else {
+        showError(e);
+    };
 });
 
-authorForm.addEventListener('input', () => {
-
+authorForm.addEventListener('input', (e) => {
+    if (authorForm.validity.valid) {
+        authorError.textContent = '';
+    } else {
+        showError(e);
+    };
 });
 
-pagesForm.addEventListener('input', () => {
-
+pagesForm.addEventListener('input', (e) => {
+    if (pagesForm.validity.valid) {
+        pagesError.textContent = '';
+    } else {
+        showError(e);
+    };
 });
     
 form.addEventListener('submit', (e) => {
-    // e.preventDefault();
-    if (titleForm.validity.valueMissing) {
+    if (!titleForm.validity.valid || !authorForm.validity.valid || !pagesForm.validity.valid) {
         e.preventDefault();
     } else {
         modal.style.display = "none";
+        addBook(e);
     }
+
 });
 
 
